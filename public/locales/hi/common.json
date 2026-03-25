@@ -1,0 +1,119 @@
+{
+  "app": {
+    "name": "ITC साथी",
+    "tagline": "GST इनपुट टैक्स क्रेडिट का हर रुपया स्वतः क्लेम करें"
+  },
+  "nav": {
+    "dashboard": "डैशबोर्ड",
+    "upload": "इनवॉइस अपलोड करें",
+    "claims": "ITC क्लेम",
+    "settings": "सेटिंग्स",
+    "logout": "लॉगआउट"
+  },
+  "dashboard": {
+    "title": "ITC डैशबोर्ड",
+    "totalITC": "कुल ITC पात्र राशि",
+    "pendingInvoices": "लंबित इनवॉइस",
+    "claimedThisMonth": "इस माह क्लेम किया",
+    "cementSaving": "सीमेंट दर कटौती बचत",
+    "recentInvoices": "हाल के इनवॉइस",
+    "quickUpload": "इनवॉइस अपलोड करें",
+    "generateReport": "GSTR-3B रिपोर्ट बनाएं",
+    "noInvoices": "अभी कोई इनवॉइस नहीं। शुरू करने के लिए पहला इनवॉइस अपलोड करें।",
+    "rateCutBanner": "सीमेंट पर GST 22 सितंबर 2025 से 28% से घटकर 18% हो गई है। अपनी बचत क्लेम करने के लिए इनवॉइस अपलोड करें!"
+  },
+  "upload": {
+    "title": "इनवॉइस अपलोड करें",
+    "subtitle": "सीमेंट, स्टील, ईंट और अन्य निर्माण सामग्री के PDF इनवॉइस अपलोड करें",
+    "dropzone": "यहाँ इनवॉइस छोड़ें",
+    "dropzoneHint": "PDF या इमेज (JPG, PNG) अधिकतम 10MB",
+    "browse": "फ़ाइल चुनें",
+    "processing": "इनवॉइस डेटा निकाला जा रहा है...",
+    "extracting": "AI एक्सट्रैक्शन चल रही है...",
+    "calculating": "ITC गणना हो रही है...",
+    "success": "इनवॉइस सफलतापूर्वक प्रोसेस हुई",
+    "error": "इनवॉइस प्रोसेस करने में विफल",
+    "offlineQueued": "ऑफलाइन सहेजा गया। कनेक्ट होने पर अपलोड होगा।",
+    "maxFiles": "एक बार में अधिकतम 10 फ़ाइलें अपलोड कर सकते हैं"
+  },
+  "invoice": {
+    "number": "इनवॉइस नंबर",
+    "date": "इनवॉइस तारीख",
+    "supplier": "आपूर्तिकर्ता",
+    "supplierGSTIN": "आपूर्तिकर्ता GSTIN",
+    "buyer": "क्रेता",
+    "buyerGSTIN": "क्रेता GSTIN",
+    "placeOfSupply": "आपूर्ति का स्थान",
+    "lineItems": "लाइन आइटम",
+    "description": "विवरण",
+    "hsn": "HSN कोड",
+    "quantity": "मात्रा",
+    "unit": "इकाई",
+    "taxableValue": "कर योग्य मूल्य",
+    "gstRate": "GST दर",
+    "cgst": "CGST",
+    "sgst": "SGST",
+    "igst": "IGST",
+    "totalGST": "कुल GST",
+    "totalAmount": "कुल राशि",
+    "itcEligible": "ITC पात्र",
+    "itcAmount": "ITC राशि",
+    "blocked": "अवरुद्ध",
+    "rateCutApplied": "दर कटौती लागू (28%→18%)"
+  },
+  "gst": {
+    "rateCutDate": "22 सितंबर 2025",
+    "cementOldRate": "28%",
+    "cementNewRate": "18%",
+    "steelRate": "18%",
+    "bricksRate": "5%",
+    "itcExplainer": "इनपुट टैक्स क्रेडिट (ITC) आपको खरीद पर चुकाए गए GST को बिक्री पर एकत्र GST से समायोजित करने देता है।",
+    "rateCutExplainer": "GST काउंसिल (54वीं बैठक) ने 22 सितंबर 2025 से सीमेंट पर GST 28% से घटाकर 18% कर दी है।"
+  },
+  "claims": {
+    "title": "ITC क्लेम",
+    "period": "दाखिल अवधि",
+    "selectPeriod": "अवधि चुनें",
+    "totalEligible": "कुल पात्र ITC",
+    "netITC": "शुद्ध ITC",
+    "generateGSTR3B": "GSTR-3B डेटा बनाएं",
+    "exportExcel": "Excel में निर्यात",
+    "exportJSON": "JSON में निर्यात",
+    "noClaims": "अभी कोई क्लेम नहीं। ITC क्लेम बनाने के लिए इनवॉइस प्रोसेस करें।"
+  },
+  "settings": {
+    "title": "सेटिंग्स",
+    "profile": "प्रोफ़ाइल",
+    "fullName": "पूरा नाम",
+    "businessName": "व्यवसाय का नाम",
+    "gstin": "आपका GSTIN",
+    "language": "भाषा",
+    "darkMode": "डार्क मोड",
+    "save": "सहेजें",
+    "saved": "सेटिंग्स सहेजी गईं"
+  },
+  "auth": {
+    "login": "लॉगिन",
+    "signup": "साइन अप",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "forgotPassword": "पासवर्ड भूल गए?",
+    "noAccount": "खाता नहीं है?",
+    "hasAccount": "पहले से खाता है?"
+  },
+  "common": {
+    "save": "सहेजें",
+    "cancel": "रद्द करें",
+    "delete": "हटाएं",
+    "edit": "संपादित करें",
+    "view": "देखें",
+    "download": "डाउनलोड",
+    "loading": "लोड हो रहा है...",
+    "error": "कुछ गलत हुआ",
+    "retry": "पुनः प्रयास करें",
+    "back": "वापस",
+    "rupee": "₹",
+    "yes": "हाँ",
+    "no": "नहीं"
+  }
+}
