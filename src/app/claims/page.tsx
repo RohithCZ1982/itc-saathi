@@ -14,7 +14,7 @@ function getRecentPeriods(): { value: string; label: string }[] {
   const now = new Date()
   for (let i = 0; i < 12; i++) {
     const d = new Date(now.getFullYear(), now.getMonth() - i, 1)
-    const value = d.toISOString().slice(0, 7)
+    const value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`
     const label = d.toLocaleDateString('en-IN', { month: 'long', year: 'numeric' })
     periods.push({ value, label })
   }
@@ -114,7 +114,7 @@ export default function ClaimsPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
+    <div className="max-w-4xl mx-auto space-y-6 animate-fade-in pb-20 md:pb-0">
       <div>
         <PageHeader />
         <h1 className="font-display font-bold text-2xl sm:text-3xl text-surface-900 dark:text-surface-50">

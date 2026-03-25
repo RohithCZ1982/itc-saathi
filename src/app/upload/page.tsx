@@ -9,7 +9,7 @@ import { PageHeader } from '@/components/layout/PageHeader'
 import { getSupabaseClient } from '@/lib/supabase/client'
 import { useAppStore } from '@/store'
 import { savePendingUpload } from '@/lib/offline/db'
-import { InvoiceResultCard } from '@/components/invoice/InvoiceResultCard'
+import { EditableInvoiceCard } from '@/components/invoice/EditableInvoiceCard'
 import type { ExtractedInvoiceData, UploadProgress } from '@/types'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -192,7 +192,7 @@ export default function UploadPage() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6 animate-fade-in">
+    <div className="max-w-3xl mx-auto space-y-6 animate-fade-in pb-20 md:pb-0">
       <div>
         <PageHeader />
         <h1 className="font-display font-bold text-2xl sm:text-3xl text-surface-900 dark:text-surface-50">
@@ -303,7 +303,10 @@ export default function UploadPage() {
                       <X className="w-4 h-4" />
                     </button>
                   </div>
-                  <InvoiceResultCard data={f.result} />
+                  <EditableInvoiceCard
+                    invoiceId={f.progress.invoiceId}
+                    data={f.result}
+                  />
                 </div>
               )}
             </div>

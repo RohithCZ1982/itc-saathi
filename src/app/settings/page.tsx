@@ -86,7 +86,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="max-w-xl mx-auto space-y-6 animate-fade-in">
+    <div className="max-w-xl mx-auto space-y-6 animate-fade-in pb-20 md:pb-0">
       <div>
         <PageHeader />
         <h1 className="font-display font-bold text-2xl sm:text-3xl text-surface-900 dark:text-surface-50">

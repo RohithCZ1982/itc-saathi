@@ -5,7 +5,7 @@ import { getSupabaseServerClient } from '@/lib/supabase/server'
 import { DashboardStats } from '@/components/invoice/DashboardStats'
 import { RateCutBanner } from '@/components/gst/RateCutBanner'
 import { RecentInvoices } from '@/components/invoice/RecentInvoices'
-import { QuickUpload } from '@/components/invoice/QuickUpload'
+import { OnboardingFlow } from '@/components/dashboard/OnboardingFlow'
 import Link from 'next/link'
 import { Upload, FileBarChart } from 'lucide-react'
 
@@ -16,7 +16,7 @@ export default async function DashboardPage() {
   if (!user) return null
 
   // Fetch stats
-  const [invoicesRes, claimsRes] = await Promise.all([
+  const [invoicesRes, claimsRes, profileRes] = await Promise.all([
     (supabase.from('invoices') as any)
       .select('id, file_name, status, extracted_data, uploaded_at')
       .eq('user_id', user.id)
@@ -27,19 +27,32 @@ export default async function DashboardPage() {
       .eq('user_id', user.id)
       .order('period', { ascending: false })
       .limit(3),
+    (supabase.from('profiles') as any)
+      .select('gstin, business_name')
+      .eq('id', user.id)
+      .single(),
   ])
 
-  const invoices = (invoicesRes.data || []) as Array<{ id: string; status: string; extracted_data: unknown; uploaded_at: string }>
+  const invoices = (invoicesRes.data || []) as Array<{ id: string; file_name: string; status: string; extracted_data: unknown; uploaded_at: string }>
+  const profile = profileRes.data as { gstin: string | null; business_name: string | null } | null
   const claims = (claimsRes.data || []) as Array<{ id: string; period: string; net_itc: number; total_itc: number; status: string }>
 
   // Aggregate stats
-  const currentMonth = new Date().toISOString().slice(0, 7) // YYYY-MM
+  const now = new Date()
+  const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}` // YYYY-MM
   const pendingCount = invoices.filter((i) => ['pending', 'processing'].includes(i.status)).length
   const currentClaim = claims.find((c) => c.period === currentMonth)
   const totalEligibleAllTime = claims.reduce((sum, c) => sum + (Number(c.net_itc) || 0), 0)
 
+  // Onboarding state
+  const profileComplete = !!(profile?.gstin && profile?.business_name)
+  const hasInvoices = invoices.length > 0
+
   return (
     <div className="space-y-6 animate-fade-in">
+      {/* Onboarding flow — shown until both steps complete */}
+      <OnboardingFlow profileComplete={profileComplete} hasInvoices={hasInvoices} />
+
       {/* Rate cut banner */}
       <RateCutBanner />
 
