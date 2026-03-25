@@ -18,7 +18,7 @@ export default async function DashboardPage() {
   // Fetch stats
   const [invoicesRes, claimsRes] = await Promise.all([
     (supabase.from('invoices') as any)
-      .select('id, status, extracted_data, uploaded_at')
+      .select('id, file_name, status, extracted_data, uploaded_at')
       .eq('user_id', user.id)
       .order('uploaded_at', { ascending: false })
       .limit(10),

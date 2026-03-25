@@ -4,6 +4,7 @@
 import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { FileBarChart, Download, Loader2, Plus, CheckCircle2, Clock, AlertCircle } from 'lucide-react'
+import { PageHeader } from '@/components/layout/PageHeader'
 import { formatINR } from '@/lib/gst/engine'
 import type { ITCClaim, GSTR3BData } from '@/types'
 
@@ -38,7 +39,26 @@ export default function ClaimsPage() {
     try {
       const res = await fetch('/api/claims')
       const { data } = await res.json()
-      setClaims(data?.claims || [])
+      const raw = data?.claims || []
+      // Map snake_case DB fields to camelCase ITCClaim type
+      const mapped = raw.map((c: Record<string, unknown>) => ({
+        id: c.id,
+        userId: c.user_id,
+        period: c.period,
+        status: c.status,
+        invoiceIds: c.invoice_ids,
+        totalCGST: Number(c.total_cgst),
+        totalSGST: Number(c.total_sgst),
+        totalIGST: Number(c.total_igst),
+        totalITC: Number(c.total_itc),
+        blockedITC: Number(c.blocked_itc),
+        netITC: Number(c.net_itc),
+        gstr3bData: c.gstr3b_data,
+        createdAt: c.created_at,
+        updatedAt: c.updated_at,
+        filedAt: c.filed_at,
+      }))
+      setClaims(mapped)
     } catch {
       toast.error('Failed to load claims')
     } finally {
@@ -96,6 +116,7 @@ export default function ClaimsPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
       <div>
+        <PageHeader />
         <h1 className="font-display font-bold text-2xl sm:text-3xl text-surface-900 dark:text-surface-50">
           ITC Claims
         </h1>

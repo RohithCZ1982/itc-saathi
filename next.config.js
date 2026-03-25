@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   experimental: {
     serverActions: {
-      allowedOrigins: ['localhost:3000'],
+      allowedOrigins: ['localhost:3000', 'itc-saathi-601467866912.asia-south1.run.app'],
     },
   },
   // PDF parse requires server-side only; prevent client bundling

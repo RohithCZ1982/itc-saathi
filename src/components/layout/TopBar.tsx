@@ -4,7 +4,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X, LayoutDashboard, Upload, FileBarChart, Settings, LogOut, Wifi, WifiOff } from 'lucide-react'
+import { Menu, X, LayoutDashboard, Upload, FileBarChart, Settings, LogOut, WifiOff, ArrowLeft } from 'lucide-react'
 import { getSupabaseClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { useAppStore } from '@/store'
@@ -61,10 +61,21 @@ export function TopBar({ profile }: { profile: Profile }) {
             </span>
           </div>
 
-          {/* Desktop: breadcrumb title */}
-          <h1 className="hidden md:block font-display font-semibold text-lg text-surface-800 dark:text-surface-100">
-            {title}
-          </h1>
+          {/* Desktop: back button + title */}
+          <div className="hidden md:flex items-center gap-2">
+            {pathname !== '/dashboard' && (
+              <Link
+                href="/dashboard"
+                className="p-1.5 rounded-lg text-surface-500 hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors"
+                aria-label="Back to Dashboard"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </Link>
+            )}
+            <h1 className="font-display font-semibold text-lg text-surface-800 dark:text-surface-100">
+              {title}
+            </h1>
+          </div>
 
           {/* Right side */}
           <div className="flex items-center gap-3">

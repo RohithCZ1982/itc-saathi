@@ -55,7 +55,7 @@ function AuthForm() {
   }
 
   return (
-    <main className="min-h-screen bg-surface-950 flex items-center justify-center p-4">
+    <main className="dark min-h-screen bg-surface-950 flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
         {/* Logo */}
         <Link href="/" className="block text-center mb-8">

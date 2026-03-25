@@ -6,50 +6,54 @@ import type { ExtractedInvoiceData, LineItem, GSTRate } from '@/types'
 import { enrichLineItems } from '@/lib/gst/engine'
 import { v4 as uuidv4 } from 'uuid'
 
-const ANTHROPIC_API_URL = 'https://api.anthropic.com/v1/messages'
-const MODEL = 'claude-sonnet-4-20250514'
+const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions'
+const MODEL = 'llama-3.3-70b-versatile'
 
 export async function extractInvoiceData(
   rawText: string,
   ocrUsed: boolean,
   _invoiceId: string
 ): Promise<ExtractedInvoiceData> {
-  const apiKey = process.env.ANTHROPIC_API_KEY
-  if (!apiKey) throw new Error('ANTHROPIC_API_KEY is not set')
+  const apiKey = process.env.GROQ_API_KEY
+  if (!apiKey) throw new Error('GROQ_API_KEY is not set')
 
   const truncated = rawText.length > 8000 ? rawText.slice(0, 8000) + '...[truncated]' : rawText
 
-  const response = await fetch(ANTHROPIC_API_URL, {
+  const response = await fetch(GROQ_API_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
+      'Authorization': `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
       model: MODEL,
       max_tokens: 4096,
-      system: `You extract structured data from Indian GST invoices. Return ONLY valid JSON, no preamble.`,
-      messages: [{
-        role: 'user',
-        content: `Extract invoice data from this text and return JSON with exactly these fields:
+      messages: [
+        {
+          role: 'system',
+          content: 'You extract structured data from Indian GST invoices. Return ONLY valid JSON, no preamble.',
+        },
+        {
+          role: 'user',
+          content: `Extract invoice data from this text and return JSON with exactly these fields:
 {"invoice_number":null,"invoice_date":"YYYY-MM-DD","supplier_gstin":null,"supplier_name":null,"supplier_address":null,"buyer_gstin":null,"buyer_name":null,"buyer_address":null,"place_of_supply":null,"reverse_charge":false,"line_items":[{"description":"","hsn":"","quantity":0,"unit":"NOS","unit_price":0,"taxable_value":0,"gst_rate":18,"cgst":0,"sgst":0,"igst":0,"total_amount":0}],"subtotal":0,"total_cgst":0,"total_sgst":0,"total_igst":0,"total_amount":0,"confidence":0.8}
 
 HSN must be digits only. gst_rate must be 5, 12, 18, or 28.
 
 INVOICE TEXT:
-${truncated}`
-      }],
+${truncated}`,
+        },
+      ],
     }),
   })
 
   if (!response.ok) {
     const err = await response.text().catch(() => '')
-    throw new Error(`Claude API error ${response.status}: ${err.slice(0, 200)}`)
+    throw new Error(`Groq API error ${response.status}: ${err.slice(0, 200)}`)
   }
 
   const data = await response.json()
-  const rawJson = (data.content?.[0]?.text ?? '').replace(/```json\n?|\n?```/g, '').trim()
+  const rawJson = (data.choices?.[0]?.message?.content ?? '').replace(/```json\n?|\n?```/g, '').trim()
 
   let parsed: Record<string, unknown>
   try {

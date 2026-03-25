@@ -5,6 +5,7 @@ import { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import toast from 'react-hot-toast'
 import { Upload, FileText, X, CheckCircle, AlertCircle, Loader2, WifiOff } from 'lucide-react'
+import { PageHeader } from '@/components/layout/PageHeader'
 import { getSupabaseClient } from '@/lib/supabase/client'
 import { useAppStore } from '@/store'
 import { savePendingUpload } from '@/lib/offline/db'
@@ -193,6 +194,7 @@ export default function UploadPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-6 animate-fade-in">
       <div>
+        <PageHeader />
         <h1 className="font-display font-bold text-2xl sm:text-3xl text-surface-900 dark:text-surface-50">
           Upload Invoice
         </h1>

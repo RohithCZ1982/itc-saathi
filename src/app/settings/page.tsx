@@ -4,6 +4,7 @@
 import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { Save, Loader2, Moon, Sun, Globe } from 'lucide-react'
+import { PageHeader } from '@/components/layout/PageHeader'
 import { getSupabaseClient } from '@/lib/supabase/client'
 import { useAppStore } from '@/store'
 import { useTheme } from 'next-themes'
@@ -87,6 +88,7 @@ export default function SettingsPage() {
   return (
     <div className="max-w-xl mx-auto space-y-6 animate-fade-in">
       <div>
+        <PageHeader />
         <h1 className="font-display font-bold text-2xl sm:text-3xl text-surface-900 dark:text-surface-50">
           Settings
         </h1>
